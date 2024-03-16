@@ -18,11 +18,18 @@ public class Movie {
     public Movie() {
     }
 
-    public Movie(String title, String director, int year) {
-        this.title = title;
-        this.director = director;
-        this.year = year;
-    }
+	public Movie( String title, String director, String image, int year) {
+		this.title = title;
+		this.director = director;
+		this.image = image;
+		this.year = year;
+	}
+	public Movie( String title, String director, int year) {
+		this.title = title;
+		this.director = director;
+		this.year = year;
+	}
+
 
 	public Long getId() {
 		return id;

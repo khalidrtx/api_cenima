@@ -1,0 +1,29 @@
+version: '3.8'
+services:
+  api-cenima:
+    build: .
+    ports:
+      - "8078:8089"
+    expose:
+      - "8078"
+    depends_on:
+      - mysql
+  mysql:  # Changer mariadb à mysql
+    image: mysql  # Changer mariadb à mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+    ports:
+      - "3306:3306"
+    expose:
+      - "3306"
+    volumes:
+      - mysql_data:/var/lib/mysql  # Facultatif : changer mariadb_data à mysql_data
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8880:80"
+    environment:
+      PMA_HOST: mysql  # Changer mariadb à mysql
+      MYSQL_ROOT_PASSWORD: 1234
+volumes:
+  mysql_data:  # Facultatif : changer mariadb_data à mysql_data
