@@ -1,28 +1,41 @@
 trigger:
-- main  # Change this to your main branch name if different
+- main
 
 pool:
   vmImage: 'ubuntu-latest'
 
-jobs:
-- job: Build
-  displayName: 'Build and Test'
-  steps:
-  - task: Maven@3
-    inputs:
-      mavenPomFile: 'pom.xml'
-      goals: 'clean install'
-      publishJUnitResults: true
-      testResultsFiles: '**/surefire-reports/TEST-*.xml'
+steps:
+- script: echo "Début du pipeline CI/CD"
+  displayName: 'Initialisation'
 
-- job: Deploy
-  displayName: 'Deploy to Azure'
-  dependsOn: Build
-  condition: succeeded()
-  steps:
-  - task: AzureWebApp@1
-    inputs:
-      azureSubscription: '<MyAzureConnection>'
-      appName: '<test>'
-      package: '$(System.DefaultWorkingDirectory)/api-cenima/target/*.jar'
-      deployToSlotOrASE: false
+- script: 
+    - echo "Construction de l'application..." 
+    - # Ajoutez ici les commandes de construction de votre application (ex: compilation du code)
+  displayName: 'Build'
+
+- script: 
+    - echo "Exécution des tests unitaires..." 
+    - mvn test
+  displayName: 'Tests Unitaires'
+
+- script: 
+    - echo "Déploiement de l'application sur l'environnement de test..." 
+    - # Ajoutez ici les commandes pour déployer votre application sur l'environnement de test
+    - # Exemple avec Maven : mvn azure-webapp:deploy -Dazure.resourceGroup=yourResourceGroup -Dazure.appName=yourAppName -Dazure.webappName=yourWebAppName -Dazure.username=yourUsername -Dazure.password=yourPassword
+  displayName: 'Déploiement sur Test'
+
+- script: 
+    - echo "Déploiement de l'application sur l'environnement de staging..." 
+    - # Ajoutez ici les commandes pour déployer votre application sur l'environnement de staging
+    - # Exemple avec Maven : mvn azure-webapp:deploy -Dazure.resourceGroup=yourResourceGroup -Dazure.appName=yourAppName -Dazure.webappName=yourWebAppName -Dazure.username=yourUsername -Dazure.password=yourPassword
+  displayName: 'Déploiement sur Staging'
+
+- script: 
+    - echo "Déploiement de l'application sur l'environnement de production..." 
+    - # Ajoutez ici les commandes pour déployer votre application sur l'environnement de production
+    - # Exemple avec Maven : mvn azure-webapp:deploy -Dazure.resourceGroup=yourResourceGroup -Dazure.appName=yourAppName -Dazure.webappName=yourWebAppName -Dazure.username=yourUsername -Dazure.password=yourPassword
+  displayName: 'Déploiement sur Production'
+
+
+- script: echo "Fin du pipeline CI/CD"
+  displayName: 'Terminé'
