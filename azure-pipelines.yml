@@ -5,7 +5,8 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
-- script: echo "Début du pipeline CI/CD"
+- script: 
+    echo "Début du pipeline CI/CD"
   displayName: 'Initialisation'
 
 - script: 
@@ -29,5 +30,6 @@ steps:
     echo "Déploiement de l'application sur l'environnement de production..." 
   displayName: 'Déploiement sur Production'
 
-- script: echo "Fin du pipeline CI/CD"
+- script: 
+    echo "Fin du pipeline CI/CD"
   displayName: 'Terminé'
