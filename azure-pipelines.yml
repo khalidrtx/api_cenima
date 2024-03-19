@@ -11,6 +11,7 @@ steps:
 
 - script: 
     echo "Construction de l'application..." 
+    mvn package  # This command builds the project and generates the JAR
   displayName: 'Build'
 
 - script: 
